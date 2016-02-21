@@ -32,4 +32,6 @@
 *.dSYM/
 /chisel/project/target/*
 /chisel/target/*
+/ahbmli/project/target/*
+/ahbmli/target/*
 
