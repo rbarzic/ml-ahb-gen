@@ -1,0 +1,23 @@
+{
+    "masters": [
+        "jtag",
+        "dmem",
+        "imem"
+    ],
+    "slaves": {
+        "codemem": {
+            "address_range": [
+                31,
+                28
+            ],
+            "address_value": 0
+        },
+        "datamem": {
+            "address_range": [
+                31,
+                28
+            ],
+            "address_value": 2
+        }
+    }
+}

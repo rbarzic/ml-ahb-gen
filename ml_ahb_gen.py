@@ -1,5 +1,7 @@
 # A chisel generator for hasti multi-layer interconnect
 import AutoVivification as av
+import json
+import argparse
 
 # The template for the main file
 tpl_file="""
@@ -66,6 +68,11 @@ ml_ahb['slaves']['datamem']['address_value'] = 2
 
 
 
+print(json.dumps (ml_ahb,
+      sort_keys=True,
+      indent=4, separators=(',', ': ')))
+
+
 
 def master_connect(spec):
     txt = ""
@@ -123,7 +130,35 @@ def xbar_inst(spec):
     txt += tpl_xbar_inst.format(**d)
     return txt
 
+
+def get_args():
+    """
+    Get command line arguments
+    """
+
+    parser = argparse.ArgumentParser(description="""
+    A Chisel generator for HASTI (AHB multilayer interconnect)
+    """)
+
+    parser.add_argument('--json', action='store', dest='json',
+                        help='JSON file for the configuartion of the interconnect')
+
+    parser.add_argument('--outdir', action='store', dest='outdir',
+                        help='Directory where to store the chisel file')
+
+    parser.add_argument('--version', action='version', version='%(prog)s 0.1')
+    return parser.parse_args()
+
+
+
+
 if __name__ == '__main__':
+
+    args = get_args()
+    ml_ahb = None
+    with open(args.json) as f:
+        ml_ahb = json.load(f)
+
     d=dict()
     d['master_connect'] = master_connect(ml_ahb)
     d['slave_connect']  = slave_connect(ml_ahb)
@@ -132,4 +167,7 @@ if __name__ == '__main__':
     d['master_ios']      = master_ios(ml_ahb)
     d['slave_ios']      = slave_ios(ml_ahb)
     txt = tpl_file.format(**d)
-    print(txt)
+
+    outfile_name = args.outdir + "/AHB_MLI.scala_temp"
+    with open(outfile_name,'w') as f:
+        f.write(txt)
