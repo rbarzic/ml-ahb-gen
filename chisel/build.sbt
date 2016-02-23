@@ -1,31 +1,12 @@
-name := "AHB_MLI"
+organization := "edu.berkeley.cs"
 
-scalaVersion := "2.10.2"
+version := "2.3-SNAPSHOT"
 
-addSbtPlugin("com.github.scct" %% "sbt-scct" % "0.2")
+name := "ahb-mli"
 
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-language:reflectiveCalls","-language:implicitConversions")
+scalaVersion := "2.11.7"
 
-libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _)
+scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-language:reflectiveCalls","-language:implicitConversions","-language:postfixOps")
 
-scalaSource in Compile <<= baseDirectory(_ / "src")
-
-libraryDependencies += "edu.berkeley.cs" %% "chisel" % "latest.release"
-
-
-
-
-// libraryDependencies += "edu.berkeley.cs" %% "chisel" % "2.2.31"
-
-//libraryDependencies ++= (Seq("chisel","cde").map {
-//  dep: String => sys.props.get(dep + "Version") map { "edu.berkeley.cs" %% dep % _ }}).flatten
-
-//organization := "edu.berkeley.cs"
-//
-//version := "2.3-SNAPSHOT"
-//
-//name := "AHB_MLI"
-//
-//scalaVersion := "2.11.7"
-//
-//scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-language:reflectiveCalls")
+unmanagedSourceDirectories in Compile += baseDirectory.value / "../junctions"
+unmanagedSourceDirectories in Compile += baseDirectory.value / "../context-dependent-environments"

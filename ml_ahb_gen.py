@@ -55,23 +55,23 @@ tpl_xbar_inst = "    val xbar = Module(new HastiXbar(3, Seq({fn_list})))"
 
 
 
-ml_ahb = av.AutoVivification()
-
-
-ml_ahb['masters'] = ['jtag','dmem','imem']
-
-ml_ahb['slaves']['codemem']['address_range'] = [31,28]
-ml_ahb['slaves']['codemem']['address_value'] = 0
-
-ml_ahb['slaves']['datamem']['address_range'] = [31,28]
-ml_ahb['slaves']['datamem']['address_value'] = 2
-
-
-
-print(json.dumps (ml_ahb,
-      sort_keys=True,
-      indent=4, separators=(',', ': ')))
-
+#ml_ahb = av.AutoVivification()
+#
+#
+#ml_ahb['masters'] = ['jtag','dmem','imem']
+#
+#ml_ahb['slaves']['codemem']['address_range'] = [31,28]
+#ml_ahb['slaves']['codemem']['address_value'] = 0
+#
+#ml_ahb['slaves']['datamem']['address_range'] = [31,28]
+#ml_ahb['slaves']['datamem']['address_value'] = 2
+#
+#
+#
+#print(json.dumps (ml_ahb,
+#      sort_keys=True,
+#      indent=4, separators=(',', ': ')))
+#
 
 
 def master_connect(spec):
@@ -157,6 +157,7 @@ if __name__ == '__main__':
     args = get_args()
     ml_ahb = None
     with open(args.json) as f:
+        print "-I- Reading JSON file " + args.json
         ml_ahb = json.load(f)
 
     d=dict()
@@ -168,6 +169,6 @@ if __name__ == '__main__':
     d['slave_ios']      = slave_ios(ml_ahb)
     txt = tpl_file.format(**d)
 
-    outfile_name = args.outdir + "/AHB_MLI.scala_temp"
+    outfile_name = args.outdir + "/Ahbmli.scala"
     with open(outfile_name,'w') as f:
         f.write(txt)
