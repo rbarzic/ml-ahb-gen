@@ -8,8 +8,8 @@ import junctions._
 class Ahbmli  extends Module {
   implicit val p = Parameters.empty
   val io = new Bundle {
-    val iside = new HastiMasterIO().flip
     val dside = new HastiMasterIO().flip
+    val iside = new HastiMasterIO().flip
 
 
     val periph = new HastiSlaveIO().flip
@@ -23,10 +23,10 @@ class Ahbmli  extends Module {
     val tcm1_afn = (addr: UInt) => addr (31,28) === UInt (2)
 
 
-    val xbar = Module(new HastiXbar(3, Seq(periph_afn,tcm0_afn,tcm1_afn)))
+    val xbar = Module(new HastiXbar(2, Seq(periph_afn,tcm0_afn,tcm1_afn)))
 
-    xbar.io.masters (0) <> io.iside
-    xbar.io.masters (1) <> io.dside
+    xbar.io.masters (0) <> io.dside
+    xbar.io.masters (1) <> io.iside
 
     io.periph <> xbar.io.slaves(0)
     io.tcm0 <> xbar.io.slaves(1)
