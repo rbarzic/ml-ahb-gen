@@ -50,7 +50,7 @@ tpl_master_connect = "    xbar.io.masters ({m_idx}) <> io.{m_name}\n"
 tpl_slave_connect =  "    io.{s_name} <> xbar.io.slaves({s_idx})\n"
 
 tpl_decoding_fns = "    val {fn_name} = (addr: UInt) => addr ({addr_msb},{addr_lsb}) === UInt ({addr_val})\n"
-tpl_xbar_inst = "    val xbar = Module(new HastiXbar(3, Seq({fn_list})))"
+tpl_xbar_inst = "    val xbar = Module(new HastiXbar({nb_masters}, Seq({fn_list})))"
 
 
 
@@ -126,7 +126,7 @@ def xbar_inst(spec):
     txt = ""
     d = dict()
     d['fn_list']= ','.join([s+"_afn" for s in spec['slaves'].keys()])
-
+    d['nb_masters'] = len(spec['masters'])
     txt += tpl_xbar_inst.format(**d)
     return txt
 
