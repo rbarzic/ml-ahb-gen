@@ -1,4 +1,4 @@
-JSON ?= nanorv32_ahbmli.json
+JSON ?= example.json
 
 gen_chisel:
 	python ml_ahb_gen.py --json=$(JSON)  --outdir=chisel

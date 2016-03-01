@@ -1,0 +1,11 @@
+language: scala python
+
+
+script:
+  - make all
+  
+  
+  
+  
+
+  
