@@ -6,4 +6,11 @@ Using JSON as the input format (see example.json)
 
 Note : you must have sbt in your path.
 
+Usage :
+
+```bash
+make JSON=<path to your JSON file>
+```
+
+
 Resulting Verilog file is  chisel/Ahbmli.v
