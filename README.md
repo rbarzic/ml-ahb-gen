@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rbarzic/ml-ahb-gen.svg?branch=master)](https://travis-ci.org/rbarzic/ml-ahb-gen)
+
 # ml-ahb-gen
 A Verilog AMBA AHB Multilayer interconnect generator
 
