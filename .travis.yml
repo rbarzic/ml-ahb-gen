@@ -1,5 +1,7 @@
 language: scala python
 
+before_install:
+    - sudo apt-get install -y sbt build-essential
 
 script:
   - make all
