@@ -1,1 +1,0 @@
-../junctions/src/main/scala/stream.scala
