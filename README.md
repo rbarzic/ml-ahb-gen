@@ -16,8 +16,8 @@ git clone  --recursive   https://github.com/rbarzic/ml-ahb-gen.git
 ## Usage :
 
 ```bash
-make JSON=<path to your JSON file>
+make all JSON=<path to your JSON file>
 ```
-
+(just use ```make all``` to try out)
 
 Resulting Verilog file is  chisel/Ahbmli.v
