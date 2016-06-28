@@ -7,8 +7,13 @@ Based on the Hasti multilayer interconnect (https://github.com/ucb-bar/junctions
 Using JSON as the input format (see example.json)
 
 Note : you must have sbt in your path.
+## Checkout 
 
-Usage :
+```bash
+git clone  --recursive   git@github.com:rbarzic/ml-ahb-gen.git
+```
+
+## Usage :
 
 ```bash
 make JSON=<path to your JSON file>
