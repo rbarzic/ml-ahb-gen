@@ -10,7 +10,7 @@ Note : you must have sbt in your path.
 ## Checkout 
 
 ```bash
-git clone  --recursive   git@github.com:rbarzic/ml-ahb-gen.git
+git clone  --recursive   https://github.com/rbarzic/ml-ahb-gen.git
 ```
 
 ## Usage :
