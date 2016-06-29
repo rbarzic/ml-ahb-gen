@@ -1,34 +1,33 @@
+
 package Ahbmli
 
 import Chisel._
 import cde.{Parameters, Field}
 import junctions._
 
-
-
-class Ahbmli extends Module {
-
+class Ahbmli  extends Module {
   implicit val p = Parameters.empty
-  val ahbmli_params = p.alter(
+    val ahbmli_params = p.alter(
     (pname,site,here,up) => pname match {
 
       case HastiKey("TL") =>
         HastiParameters(
-          addrBits = 12,
-          dataBits = 12)
+          addrBits = 32,
+          dataBits = 32)
 
       case HastiId => "TL"
   }
   )
 
+
   val io = new Bundle {
-    val jtag = new HastiMasterIO().flip
-    val dmem = new HastiMasterIO().flip
-    val imem = new HastiMasterIO().flip
+    val jtag = (new HastiMasterIO()(ahbmli_params) ).flip
+    val dmem = (new HastiMasterIO()(ahbmli_params) ).flip
+    val imem = (new HastiMasterIO()(ahbmli_params) ).flip
 
 
-    val datamem = new HastiSlaveIO().flip
-    val codemem = new HastiSlaveIO().flip
+    val datamem = (new HastiSlaveIO()(ahbmli_params) ).flip
+    val codemem = (new HastiSlaveIO()(ahbmli_params) ).flip
 
   }
 
@@ -36,7 +35,7 @@ class Ahbmli extends Module {
     val codemem_afn = (addr: UInt) => addr (31,28) === UInt (0)
 
 
-    val xbar = Module(new HastiXbar(3, Seq(datamem_afn,codemem_afn)))
+    val xbar = Module(new HastiXbar(3, Seq(datamem_afn,codemem_afn))(ahbmli_params))
 
     xbar.io.masters (0) <> io.jtag
     xbar.io.masters (1) <> io.dmem
@@ -54,13 +53,7 @@ class AhbmliTests(c: Ahbmli) extends Tester(c) {
 }
 
 object Ahbmli {
-
-
-
   def main(args: Array[String]): Unit = {
-    val tutArgs = args.slice(1, args.length)
-    chiselMainTest(tutArgs, () => Module(new Ahbmli)) {
-      c => new AhbmliTests(c) }
+    chiselMain(Array("--backend", "v"), () => Module(new Ahbmli()))
   }
-
 }

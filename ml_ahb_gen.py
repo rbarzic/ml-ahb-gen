@@ -13,6 +13,19 @@ import junctions._
 
 class Ahbmli  extends Module {{
   implicit val p = Parameters.empty
+    val ahbmli_params = p.alter(
+    (pname,site,here,up) => pname match {{
+
+      case HastiKey("TL") =>
+        HastiParameters(
+          addrBits = 32,
+          dataBits = 32)
+
+      case HastiId => "TL"
+  }}
+  )
+
+
   val io = new Bundle {{
 {master_ios}
 
@@ -35,22 +48,20 @@ class AhbmliTests(c: Ahbmli) extends Tester(c) {{
 
 object Ahbmli {{
   def main(args: Array[String]): Unit = {{
-    val tutArgs = args.slice(1, args.length)
-    chiselMainTest(tutArgs, () => Module(new Ahbmli())) {{
-      c => new AhbmliTests(c) }}
+    chiselMain(Array("--backend", "v"), () => Module(new Ahbmli()))
   }}
 }}
 """
 # smaller templates for code snippets (see string.format in Python doc if you are not familiar
 # with the format)
-tpl_master_ios = "    val {m_name} = new HastiMasterIO().flip\n"
-tpl_slave_ios = "    val {s_name} = new HastiSlaveIO().flip\n"
+tpl_master_ios = "    val {m_name} = (new HastiMasterIO()(ahbmli_params) ).flip\n"
+tpl_slave_ios = "    val {s_name} = (new HastiSlaveIO()(ahbmli_params) ).flip\n"
 
 tpl_master_connect = "    xbar.io.masters ({m_idx}) <> io.{m_name}\n"
 tpl_slave_connect =  "    io.{s_name} <> xbar.io.slaves({s_idx})\n"
 
 tpl_decoding_fns = "    val {fn_name} = (addr: UInt) => addr ({addr_msb},{addr_lsb}) === UInt ({addr_val})\n"
-tpl_xbar_inst = "    val xbar = Module(new HastiXbar({nb_masters}, Seq({fn_list})))"
+tpl_xbar_inst = "    val xbar = Module(new HastiXbar({nb_masters}, Seq({fn_list}))(ahbmli_params))"
 
 
 
