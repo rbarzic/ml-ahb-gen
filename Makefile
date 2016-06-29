@@ -1,7 +1,7 @@
 JSON ?= example.json
 
 gen_chisel:
-	python ml_ahb_gen.py --json=$(JSON)  --outdir=chisel
+	python ml_ahb_gen.py --json=$(JSON)  --outdir=chisel/src/main/scala
 
 gen_v:
 	cd chisel && sbt "run --genHarness --backend v"
