@@ -1,6 +1,6 @@
 [submodule "junctions"]
 	path = junctions
-	url = https://github.com/ucb-bar/junctions.git
+	url = https://github.com/lowRISC/junctions.git
 [submodule "context-dependent-environments"]
 	path = context-dependent-environments
 	url = https://github.com/ucb-bar/context-dependent-environments.git
